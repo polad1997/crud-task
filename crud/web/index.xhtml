@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+
+
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Developers</title>
+        <style>
+            table{
+                width: 100%;
+            }
+            table thead tr th{
+                background-color: black;
+                color :white;
+            }
+            table tbody tr td{
+                border : 1px solid #DDD;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h:form>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Dev_ID</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ui:repeat value="#{developerController.developers}" var="d">
+                        <tr>
+                            
+                            <td>
+                                <h:outputText value="#{d.dev_ID}" rendered="#{notd.editable}" />
+                               
+                            </td>
+                            <td>
+                                <h:outputText value="#{d.name}" rendered="#{!d.editable}" />
+                                <h:inputText value="#{d.name}" rendered="#{d.editable}" />
+                            </td>
+                            <td>
+                                <h:outputText value="#{d.surname}" rendered="#{!d.editable}" />
+                                <h:inputText value="#{d.surname}" rendered="#{d.editable}" />
+                            </td>
+                            <td>
+                                <h:outputText value="#{d.email}" rendered="#{!d.editable}" />
+                                <h:inputText value="#{d.email}" rendered="#{d.editable}" />
+                            </td>
+                            <td>
+                                <h:commandButton value="EDIT" action="#{developerController.editRow(d)}" rendered="#{!d.editable}" >
+                                    <f:ajax render="@form" execute="@this"/>
+                                </h:commandButton>
+                                <h:commandButton value="SAVE" action="#{developerController.saveRow()}" rendered="#{d.editable}" >
+                                    <f:ajax render="@form" execute="@form"/>
+                                </h:commandButton>
+                                <h:commandButton value="DELETE" action="#{developerController.delete(d)}"  >
+                                    <f:ajax render="@form" execute="@this"/>
+                                </h:commandButton>
+                            </td>
+                        </tr>
+                    </ui:repeat>
+                </tbody>
+            </table>
+        </h:form>
+    </h:body>
+</html>
+
